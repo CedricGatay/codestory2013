@@ -8,11 +8,12 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
-      // Add your project dependencies here,
+      "org.specs2" %% "specs2" % "1.12.3" % "test"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here      
+      resolvers ++= Seq("specs2snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
+        "specs2releases"  at "http://oss.sonatype.org/content/repositories/releases")
     )
 
 }
