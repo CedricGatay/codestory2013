@@ -6,6 +6,7 @@ import scala._
 import collection.mutable
 import scala.Some
 import play.api.Logger
+import java.util.regex.Pattern
 
 /**
  * User: cgatay
@@ -14,14 +15,13 @@ import play.api.Logger
  */
 object Answerer {
   def answerQuery(query: Option[Seq[String]]) : Result = {
-    query match {
-      case Some(Seq("Quelle est ton adresse email"))
+    val queryContent : Seq[String]= query.getOrElse(Seq())
+    val firstQueryContent = queryContent.headOption.getOrElse("")
+    val ouiNonPattern = ".*(OUI/NON\\))$".r
+    firstQueryContent match {
+      case "Quelle est ton adresse email"
         => Ok("cedric@gatay.fr")
-      case Some(Seq("Es tu abonne a la mailing list(OUI/NON)"))
-        => Ok("OUI")
-      case Some(Seq("Es tu heureux de participer(OUI/NON)"))
-        => Ok("OUI")
-      case Some(Seq("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)"))
+      case ouiNonPattern(_)
         => Ok("OUI")
       case _ => {
         Logger.error("No match : " + query)
