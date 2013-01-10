@@ -1,15 +1,23 @@
 package controllers
 
 import play.api.mvc._
-import scala._
-import scala.Some
 import services.Answerer
+import play.api.data._
+import play.api.data.Forms._
 
 object Application extends Controller {
+  val postForm = Form("q" -> text)
 
   def index = Action {
     implicit request =>
-      Answerer.answerQuery(request.queryString.get("q"))
+      postForm.bindFromRequest.fold(
+        error => {
+          Answerer.answerQuery(request.queryString.get("q"))
+        },
+        success => {
+          Answerer.answerQuery(Some(Seq(success)))
+        }
+      )
   }
 
 }

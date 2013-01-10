@@ -15,9 +15,14 @@ import play.api.Logger
 object Answerer {
   def answerQuery(query: Option[Seq[String]]) : Result = {
     query match {
-      case Some(Seq("Quelle est ton adresse email")) => Ok("cedric@gatay.fr")
-      case Some(Seq("Es tu abonne a la mailing list(OUI/NON)")) => Ok("OUI")
-      case Some(Seq("Es tu heureux de participer(OUI/NON)")) => Ok("OUI")
+      case Some(Seq("Quelle est ton adresse email"))
+        => Ok("cedric@gatay.fr")
+      case Some(Seq("Es tu abonne a la mailing list(OUI/NON)"))
+        => Ok("OUI")
+      case Some(Seq("Es tu heureux de participer(OUI/NON)"))
+        => Ok("OUI")
+      case Some(Seq("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)"))
+        => Ok("OUI")
       case _ => {
         Logger.error("No match : " + query)
         NotFound
