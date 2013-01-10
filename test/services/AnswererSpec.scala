@@ -25,6 +25,12 @@ class AnswererSpec extends Specification {
       contentAsString(queryResult) must equalTo("OUI")
     }
 
+    "answer with OUI when asked 'Es tu heureux de participer(OUI/NON)'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("Es tu heureux de participer(OUI/NON)")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("OUI")
+    }
+
     "answer with NotFound when asked something else" in {
       val queryResult = Answerer.answerQuery(Some(Seq("Lorem ipsum")))
       status(queryResult) must equalTo(NOT_FOUND)
