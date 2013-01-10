@@ -3,6 +3,7 @@ package services
 import play.api.mvc._
 import play.api.mvc.Results._
 import scala._
+import collection.mutable
 import scala.Some
 import play.api.Logger
 
@@ -15,6 +16,7 @@ object Answerer {
   def answerQuery(query: Option[Seq[String]]) : Result = {
     query match {
       case Some(Seq("Quelle est ton adresse email")) => Ok("cedric@gatay.fr")
+      case Some(Seq("Es tu abonne a la mailing list(OUI/NON)")) => Ok("OUI")
       case _ => {
         Logger.error("No match : " + query)
         NotFound
