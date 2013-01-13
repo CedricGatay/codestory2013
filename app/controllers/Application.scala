@@ -21,7 +21,7 @@ object Application extends Controller {
       }
   }
 
-  def enonce(value : String) = Action{
+  def enonce(value : String) = Action(parse.tolerantText){
     implicit request =>
       request.method match {
         case "POST" => {
