@@ -37,10 +37,10 @@ class AnswererSpec extends Specification {
       contentAsString(queryResult) must equalTo("OUI")
     }
 
-    "answer with OUI when asked everything ending by OUI/NON)" in {
+    "answer with NON when asked everything ending by OUI/NON)" in {
       val queryResult = Answerer.answerQuery(Some(mutable.Buffer("azeazezaeOUI/NON)")))
       status(queryResult) must equalTo(OK)
-      contentAsString(queryResult) must equalTo("OUI")
+      contentAsString(queryResult) must equalTo("NON")
       val queryResultNotValid = Answerer.answerQuery(Some(mutable.Buffer("azeazOUI/NON)az")))
       status(queryResultNotValid) must equalTo(NOT_FOUND)
     }

@@ -22,11 +22,13 @@ object Answerer {
       case "Quelle est ton adresse email"
         => Ok("cedric@gatay.fr")
       case "Es tu abonne a la mailing list(OUI/NON)"
-      => Ok("OUI")
+        => Ok("OUI")
       case "Es tu heureux de participer(OUI/NON)"
-      => Ok("OUI")
+        => Ok("OUI")
       case "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)"
-      => Ok("OUI")
+        => Ok("OUI")
+      case "As tu bien recu le premier enonce(OUI/NON)"
+        => Ok("OUI")
       case OuiNonPattern()
         => Ok("NON")
       case _ => {

@@ -1,10 +1,12 @@
 package controllers
 
 import play.api.mvc._
-import services.Answerer
+import services.{ScalaSkel, Answerer}
 import play.api.data._
 import play.api.data.Forms._
 import play.api.Logger
+import play.api.libs.json.Json
+import util.parsing.json.JSONArray
 
 object Application extends Controller {
 
@@ -29,6 +31,17 @@ object Application extends Controller {
           Logger.info("Posted the following data : %s".format(encoded))
           Status(201)
         }
+      }
+  }
+
+  def scalaskel(value : Int) = Action{
+    implicit request =>
+      if (value < 0 || value > 100){
+        Status(403)
+      }else{
+        val change = ScalaSkel.gimmeChange(value)
+        val preparedMap = change.map(combination => combination.map(innerTuple => (innerTuple._1.name.toLowerCase, innerTuple._2)))
+        Ok(Json.toJson(preparedMap))
       }
   }
 
