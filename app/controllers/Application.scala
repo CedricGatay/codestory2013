@@ -25,9 +25,8 @@ object Application extends Controller {
     implicit request =>
       request.method match {
         case "POST" => {
-          val encoded = request.body.asFormUrlEncoded
+          val encoded = request.body
           Logger.info("Posted the following data : %s".format(encoded))
-          Answerer.answerQuery(encoded.getOrElse(Map()).get("q"))
           Status(201)
         }
       }
