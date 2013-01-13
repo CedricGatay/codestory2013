@@ -57,6 +57,12 @@ class AnswererSpec extends Specification {
       contentAsString(queryResult) must equalTo("2")
     }
 
+    "answer with PRODUCT (=1) when asked '1*1'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("1*1")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("1")
+    }
+
     "answer with NotFound when asked something else" in {
       val queryResult = Answerer.answerQuery(Some(Seq("Lorem ipsum")))
       status(queryResult) must equalTo(NOT_FOUND)

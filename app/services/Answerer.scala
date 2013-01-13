@@ -33,8 +33,14 @@ object Answerer {
       case OuiNonPattern()
         => Ok("NON")
       case SumPattern(a,o,b) => {
-        val sumResult = (a.toInt + b.toInt).toString
-        Ok(sumResult)
+        o match {
+          case "+" => Ok((a.toInt+b.toInt).toString)
+          case "*" => Ok(((a.toInt*b.toInt).toString))
+          case _ => {
+            Logger.error("No match : " + query)
+            NotFound
+          }
+        }
       }
       case _ => {
         Logger.error("No match : " + query)
