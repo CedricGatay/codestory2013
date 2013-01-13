@@ -21,4 +21,16 @@ object Application extends Controller {
       }
   }
 
+  def enonce(value : String) = Action{
+    implicit request =>
+      request.method match {
+        case "POST" => {
+          val encoded = request.body.asFormUrlEncoded
+          Logger.info("Posted the following data : %s".format(encoded))
+          Answerer.answerQuery(encoded.getOrElse(Map()).get("q"))
+          Status(201)
+        }
+      }
+  }
+
 }
