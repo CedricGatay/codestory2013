@@ -21,11 +21,11 @@ object Answerer {
     firstQueryContent match {
       case "Quelle est ton adresse email"
         => Ok("cedric@gatay.fr")
-      case Some(Seq("Es tu abonne a la mailing list(OUI/NON)"))
+      case "Es tu abonne a la mailing list(OUI/NON)"
       => Ok("OUI")
-      case Some(Seq("Es tu heureux de participer(OUI/NON)"))
+      case "Es tu heureux de participer(OUI/NON)"
       => Ok("OUI")
-      case Some(Seq("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)"))
+      case "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)"
       => Ok("OUI")
       case OuiNonPattern()
         => Ok("NON")
