@@ -45,6 +45,18 @@ class AnswererSpec extends Specification {
       status(queryResultNotValid) must equalTo(NOT_FOUND)
     }
 
+    "answer with OUI when asked 'As tu bien recu le premier enonce(OUI/NON)'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("As tu bien recu le premier enonce(OUI/NON)")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("OUI")
+    }
+
+    "answer with SUM (=2) when asked '1+1'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("1 1")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("2")
+    }
+
     "answer with NotFound when asked something else" in {
       val queryResult = Answerer.answerQuery(Some(Seq("Lorem ipsum")))
       status(queryResult) must equalTo(NOT_FOUND)
