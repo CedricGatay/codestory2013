@@ -7,6 +7,7 @@ import collection.mutable
 import scala.Some
 import play.api.Logger
 import java.util.regex.Pattern
+import groovy.lang.GroovyShell
 
 /**
  * User: cgatay
@@ -18,7 +19,6 @@ object Answerer {
     val queryContent : Seq[String]= query.getOrElse(Seq())
     val firstQueryContent = queryContent.headOption.getOrElse("").replaceAll(" ","+")
     val OuiNonPattern = ".*OUI/NON\\)$".r
-    val SumPattern = "([0-9,]+)([\\+\\-\\*/])([0-9,]+)".r
     firstQueryContent match {
       case "Quelle+est+ton+adresse+email"
         => Ok("cedric@gatay.fr")
@@ -32,20 +32,17 @@ object Answerer {
         => Ok("OUI")
       case OuiNonPattern()
         => Ok("NON")
-      case SumPattern(a,o,b) => {
-        o match {
-          case "+" => Ok((a.toInt+b.toInt).toString)
-          case "*" => Ok(((a.toInt*b.toInt).toString))
-          case "/" => Ok(((a.toFloat/b.toFloat).toString))
-          case _ => {
+      case v => {
+        try {
+          val evaluate = new GroovyShell().evaluate(v)
+          Logger.info("Answered with %s".format(evaluate.toString))
+          Ok(evaluate.toString)
+        }catch {
+          case _: Throwable =>
             Logger.error("No match : " + query)
             NotFound
-          }
         }
-      }
-      case _ => {
-        Logger.error("No match : " + query)
-        NotFound
+
       }
     }
   }
