@@ -36,6 +36,7 @@ object Answerer {
         o match {
           case "+" => Ok((a.toInt+b.toInt).toString)
           case "*" => Ok(((a.toInt*b.toInt).toString))
+          case "/" => Ok(((a.toFloat/b.toFloat).toString))
           case _ => {
             Logger.error("No match : " + query)
             NotFound
