@@ -38,6 +38,7 @@ object Application extends Controller {
   def solutions = Action(parse.tolerantJson){
     implicit request =>
       val body = request.body
+      Logger.info("Current body is %s".format(body))
       val objects = body.as[Array[JsObject]]
       val flights = objects.map(flight => {
         new Flight((flight \ "VOL").as[String],
