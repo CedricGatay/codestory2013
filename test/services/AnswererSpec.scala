@@ -51,6 +51,24 @@ class AnswererSpec extends Specification {
       contentAsString(queryResult) must equalTo("OUI")
     }
 
+    "answer with OUI when asked 'As tu bien recu le second enonce(OUI/NON)'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("As tu bien recu le second enonce(OUI/NON)")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("OUI")
+    }
+
+    "answer with PAS_TOP when asked 'As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("PAS_TOP")
+    }
+
+    "answer with PAS_TOP when asked 'As tu copie le code de ndeloof(OUI/NON/JE_SUIS_NICOLAS)'" in {
+      val queryResult = Answerer.answerQuery(Some(mutable.Buffer("As tu copie le code de ndeloof(OUI/NON/JE_SUIS_NICOLAS)")))
+      status(queryResult) must equalTo(OK)
+      contentAsString(queryResult) must equalTo("NON")
+    }
+
     "answer with SUM (=2) when asked '1+1'" in {
       val queryResult = Answerer.answerQuery(Some(mutable.Buffer("1 1")))
       status(queryResult) must equalTo(OK)
