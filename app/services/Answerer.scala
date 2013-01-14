@@ -35,7 +35,7 @@ object Answerer {
       case v => {
         try {
           val evaluate = new GroovyShell().evaluate(v).toString
-          val formattedResult = evaluate.replaceAll(".", ",")
+          val formattedResult = evaluate.replaceAll("\\.", ",")
           Logger.info("Got %s, formatted to %s".format(evaluate, formattedResult))
           Ok(formattedResult)
         }catch {
