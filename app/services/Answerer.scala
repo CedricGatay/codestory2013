@@ -34,6 +34,8 @@ object Answerer {
         => Ok("PAS_TOP")
       case "As+tu+bien+recu+le+second+enonce(OUI/NON)"
         => Ok("OUI")
+      case "As+tu+copie+le+code+de+ndeloof(OUI/NON/JE_SUIS_NICOLAS)"
+        => Ok("NON")
       case OuiNonPattern()
         => Ok("NON")
       case v => {
