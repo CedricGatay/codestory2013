@@ -34,8 +34,10 @@ object Answerer {
         => Ok("NON")
       case v => {
         try {
+          //TODO sanity check input or exclude everything but math in groovyShell binding
           val evaluate = new GroovyShell().evaluate(v.replaceAll(",", ".")).toString
-          val formattedResult = evaluate.replaceAll("\\.", ",")
+          //ugly handling of formatting
+          val formattedResult = evaluate.replaceAll("\\.", ",").replaceAll(",0", "")
           Logger.info("Got %s, formatted to %s".format(evaluate, formattedResult))
           Ok(formattedResult)
         }catch {
