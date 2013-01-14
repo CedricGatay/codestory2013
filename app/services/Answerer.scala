@@ -34,9 +34,10 @@ object Answerer {
         => Ok("NON")
       case v => {
         try {
-          val evaluate = new GroovyShell().evaluate(v)
-          Logger.info("Answered with %s".format(evaluate.toString))
-          Ok(evaluate.toString)
+          val evaluate = new GroovyShell().evaluate(v).toString
+          val formattedResult = evaluate.replaceAll(".", ",")
+          Logger.info("Got %s, formatted to %s".format(evaluate, formattedResult))
+          Ok(formattedResult)
         }catch {
           case _: Throwable =>
             Logger.error("No match : " + query)
