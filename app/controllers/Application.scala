@@ -50,7 +50,7 @@ object Application extends Controller {
       val map = solution._2.map {
         s => s.name
       }
-      Ok(Json.toJson(Map( "cost" -> Json.toJson(solution._1), "path" -> Json.toJson(map))))
+      Ok(Json.toJson(Map( "gain" -> Json.toJson(solution._1), "path" -> Json.toJson(map))))
   }
 
   def scalaskel(value : Int) = Action{
