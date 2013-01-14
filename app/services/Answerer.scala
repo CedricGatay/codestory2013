@@ -30,6 +30,8 @@ object Answerer {
         => Ok("OUI")
       case "As+tu+bien+recu+le+premier+enonce(OUI/NON)"
         => Ok("OUI")
+      case "As+tu+passe+une+bonne+nuit+malgre+les+bugs+de+l+etape+precedente(PAS_TOP/BOF/QUELS_BUGS)"
+        => Ok("PAS_TOP")
       case OuiNonPattern()
         => Ok("NON")
       case v => {
