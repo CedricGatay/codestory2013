@@ -1,12 +1,13 @@
 package controllers
 
 import play.api.mvc._
-import services.{ScalaSkel, Answerer}
+import services.{Jajascript, ScalaSkel, Answerer}
 import play.api.data._
 import play.api.data.Forms._
 import play.api.Logger
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, JsArray, Json}
 import util.parsing.json.JSONArray
+import models.Flight
 
 object Application extends Controller {
 
@@ -32,6 +33,23 @@ object Application extends Controller {
           Status(201)
         }
       }
+  }
+
+  def solutions = Action(parse.tolerantJson){
+    implicit request =>
+      val body = request.body
+      val objects = body.as[Array[JsObject]]
+      val flights = objects.map(flight => {
+        new Flight((flight \ "VOL").as[String],
+          (flight \ "DEPART").as[Int],
+          (flight \ "DUREE").as[Int],
+          (flight \ "PRIX").as[Int])
+      })
+      val solution = Jajascript.getSolution(flights)
+      val map = solution._2.map {
+        s => s.name
+      }
+      Ok(Json.toJson(Map( "cost" -> Json.toJson(solution._1), "path" -> Json.toJson(map))))
   }
 
   def scalaskel(value : Int) = Action{
