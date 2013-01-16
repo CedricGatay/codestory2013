@@ -40,18 +40,14 @@ object Application extends Controller {
       val body = request.body
       Logger.info("Current body is %s".format(body))
       val objects = body.as[Array[JsObject]]
-      val flights = objects.map(flight => {
-        new Flight((flight \ "VOL").as[String],
-          (flight \ "DEPART").as[Int],
-          (flight \ "DUREE").as[Int],
-          (flight \ "PRIX").as[Int])
-      })
-      val solution = Jajascript.getSolution(flights)
+      val solution = Jajascript.getSolution(Jajascript.parseJsonToFlights(objects))
       val map = solution._2.map {
         s => s.name
       }
       Ok(Json.toJson(Map( "gain" -> Json.toJson(solution._1), "path" -> Json.toJson(map))))
   }
+
+
 
   def scalaskel(value : Int) = Action{
     implicit request =>
