@@ -3,7 +3,6 @@ package services
 import models.Flight
 import play.api.Logger
 import play.api.libs.json.JsObject
-import annotation.tailrec
 
 /**
  * User: cgatay
@@ -31,14 +30,14 @@ object Jajascript {
       List(currentSolution)
     }else{
       // explore other solutions
-      val moneyWithoutHead: List[Solution] = getMoney(flights.tail, startTime, currentSolution, maxGain)
       val head = flights.head
       if (head.startTime >= startTime) {
+        val currentGain = maxGain + head.cost
         //we can use this flight as a current solution
-        val flights1: List[Solution] = getMoney(flights.tail, head.endTime, head :: currentSolution, maxGain + head.cost)
-        flights1 ::: moneyWithoutHead
+        val flightWithHead: List[Solution] = getMoney(flights.tail, head.endTime, head :: currentSolution, currentGain)
+        flightWithHead ::: getMoney(flights.tail, startTime, currentSolution, currentGain)
       } else {
-        moneyWithoutHead
+        getMoney(flights.tail, startTime, currentSolution, maxGain)
       }
     }
   }
