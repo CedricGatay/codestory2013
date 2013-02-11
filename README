@@ -1,0 +1,7 @@
+# Codestory 2013
+
+Code réalisé en utilisant Play2 + Scala
+Le code de Jajascript est recursif et peu performant, je n'ai pas eu le temps de réécrire l'algo en itératif en coupant
+les branches sans intêrets.
+
+En recherche de binôme pour la phase finale, environnement de dev usuel : Mac OS / AZERTY / IntelliJ
